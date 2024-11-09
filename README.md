@@ -121,7 +121,7 @@ rime_deployer --build ~/.local/share/fcitx5/rime/ /usr/share/rime-data ~/.local/
 /usr/bin/fcitx5 --disable=wayland -d --verbose '*'=0
 ```
 
-### 更多技巧
+## 更多技巧
 
 ### 1. 中英切换快捷键
 
