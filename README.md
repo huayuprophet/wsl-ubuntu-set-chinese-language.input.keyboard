@@ -85,7 +85,7 @@ sudo apt install fcitx5 fcitx5-chinese-addons fcitx5-frontend-gtk4 fcitx5-fronte
 
 ```bash
 sudo tee -a /etc/profile <<-'EOF'
-# eval `dbus-launch --sh-syntax` #debian系统请删除本行注释
+# eval `dbus-launch --sh-syntax` #debian系统请删除最左侧井号
 /usr/bin/fcitx5 --disable=wayland -d --verbose '*'=0
 export INPUT_METHOD=fcitx
 export GTK_IM_MODULE=fcitx
