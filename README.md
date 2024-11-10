@@ -8,9 +8,10 @@ WSLg 是微软的 WSL2 中自带的显示图形界面的功能，可以和 Windo
 
 1. 一台搭载windows 10/11的计算机设备
 2. 计算机设备已安装wsl2和ubuntu/ubuntu-24/ubuntu22，未安装则参考[微软wsl安装官方教程](https://learn.microsoft.com/zh-cn/windows/wsl/install)
-3. 如果您在国内，可能需要切换到国内的apt源，教程可参考[中科大ubuntu-wiki](https://chinanet.mirrors.ustc.edu.cn/help/ubuntu.html)（推荐）或[清华ubuntu-wiki](https://mirror.tuna.tsinghua.edu.cn/help/ubuntu/)
+3. 在国内，可能需要切换apt源，否则卡的一批，教程可参考[中科大ubuntu-wiki](https://chinanet.mirrors.ustc.edu.cn/help/ubuntu.html)（推荐）或[清华ubuntu-wiki](https://mirror.tuna.tsinghua.edu.cn/help/ubuntu/)
 4. 教程将只会指导您使用fcitx5-rime输入法，使用其他输入法请参考其他朋友们发布的博文或issue
 5. 教程不支持ubuntu20/18/16/14等更古老的系统
+6. 最新的debian系统，大体上也可以按照本教程操作
 
 ## 设置中文显示
 
@@ -19,6 +20,14 @@ WSLg 是微软的 WSL2 中自带的显示图形界面的功能，可以和 Windo
 ```bash
 sudo apt install language-pack-zh-hans fonts-noto-cjk fonts-noto-cjk-extra
 ```
+
+> 对于debian系统，您将无需安装 `language-pack-zh-hans`。请执行以下命令
+>
+> ```bash
+> sudo apt install fonts-noto-cjk fonts-noto-cjk-extra
+> sudo apt install locales
+> sudo locale-gen zh_CN.UTF-8
+> ```
 
 ### 2. 配置 locales
 
@@ -59,15 +68,24 @@ im-config
 ### 2. 安装中文输入法
 
 ```bash
-sudo apt install fcitx5 fcitx5-chinese-addons fcitx5-frontend-gtk4 fcitx5-frontend-gtk3 fcitx5-frontend-gtk2 fcitx5-frontend-qt5 fcitx5-config-qt
+sudo apt install fcitx5 fcitx5-chinese-addons fcitx5-frontend-gtk4 fcitx5-frontend-gtk3 fcitx5-frontend-gtk2 fcitx5-frontend-qt5 fcitx5-config-qt fcitx5-frontend-qt6
 ```
+
+> 对于debian用户，您将还需要补充执行以下命令
+>
+> ```bash
+> sudo apt install dbus dbus-x11
+> ```
 
 ### 3. 配置环境变量
 
 需要修改 profile 文件以开机自启动 fcitx5 并设置环境变量。以下适用于 bash，如果使用 zsh，请相应修改路径为 `/etc/zsh/zprofile`。
 
+请注意，debian系统需要做少许改动。
+
 ```bash
 sudo tee -a /etc/profile <<-'EOF'
+# eval `dbus-launch --sh-syntax` #debian系统请删除本行注释
 /usr/bin/fcitx5 --disable=wayland -d --verbose '*'=0
 export INPUT_METHOD=fcitx
 export GTK_IM_MODULE=fcitx
@@ -160,3 +178,8 @@ fc-cache -fv
 
 * [WSLg配置图形支持和配置rime输入法](https://zahui.fan/posts/81886814/)
 * [WSL2 安装中文字体](https://blog.csdn.net/oZuoZuoZuoShi/article/details/118977701)
+* [linux-安装中文输入法-Fcitx5](https://lamirs.vercel.app/posts/%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE-%E8%AE%B0%E5%BD%95-%E6%8A%A5%E9%94%99-%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/linux-%E5%AE%89%E8%A3%85%E4%B8%AD%E6%96%87%E8%BE%93%E5%85%A5%E6%B3%95-fcitx5.html)
+
+如果教程帮助到你，请为我点一下上面的星星star，这很重要。
+
+谢谢。
